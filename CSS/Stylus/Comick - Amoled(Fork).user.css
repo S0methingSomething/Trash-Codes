@@ -1439,10 +1439,6 @@ i.flag-icon.flag-icon-gb.rounded.xl\:rounded.xl\:w-7.xl\:h-5.absolute.top-0.left
     border-radius: 1px;
 }
     
-div#comment-section {
-    display: none;
-}
-    
 :focus-visible {
     outline: 1px solid transparent;
 }
