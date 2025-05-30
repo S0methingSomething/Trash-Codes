@@ -1,47 +1,40 @@
 /* ==UserStyle==
-@name           ComicK - Purple-Amoled(Fork)
+@name           ComicK - Amoled(Fork)
 @namespace      github.com/openstyles/stylus
-@version        1.0.1
-@description    A purple amoled theme with smoother, natural animations.
+@version        1.0.2
+@description    A purple amoled theme with smoother, natural animations and a vibrant purple.
 @author         S0methingSomething & Gemini
 ==/UserStyle== */
 @-moz-document domain("comick.io") {
     :root {
-        /** Backgrounds **/
-        --main-bg: rgb(0, 0, 0); /* Deep black for the main background */
-        --second-bg: rgb(18, 18, 18); /* Slightly lighter black for secondary background elements */
-        --second-bg-opacity: rgba(18, 18, 18, .5); /* Semi-transparent secondary background */
-        --third-bg: rgb(28, 28, 28); /* Even lighter black for tertiary background elements */
-        --third-bg-hover: rgba(43, 43, 43, .8); /* Tertiary background color on hover, with more opacity */
-
-        /** Colors **/
-        --white: #fff; /* Standard white text color */
-        --gray: #ccc; /* Light gray for secondary text or less important elements */
-        --purple: #9D84B7; /* Primary accent color - a pleasant purple */
-        --light-purple: #B0A8B9; /* Lighter shade of purple for highlights or accents */
+        --main-bg: rgb(0, 0, 0);
+        --second-bg: rgb(18, 18, 18);
+        --second-bg-opacity: rgba(18, 18, 18, .5);
+        --third-bg: rgb(28, 28, 28);
+        --third-bg-hover: rgba(43, 43, 43, .8);
+        --white: #fff;
+        --gray: #ccc;
+        --purple: #A020F0;
+        --light-purple: #C58BFB;
     }
 
-    /* General transition for smoother animations across various properties */
     * {
         transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body {
-        background-color: var(--main-bg); /* Sets the main background color for the entire page */
+        background-color: var(--main-bg);
     }
 
-    /* Defines transition effects for interactive elements like links, buttons, and clickable items */
     a, button, .cursor-pointer {
         transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Adds a subtle lift and shadow effect on hover for interactive elements */
     a:hover, button:hover, .cursor-pointer:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    /* Sets the primary accent color (purple) for various text elements */
     :is(.dark .dark\:text-blue-300),
     .text-blue-500,
     .hm2git0,
@@ -87,7 +80,6 @@
         color: var(--purple) !important;
     }
 
-    /* Sets the primary accent color (purple) for border elements */
     :is(.dark .dark\:border-blue-200),
     .border-blue-700,
     .rounded.p-2.flex.border-l-8.shadow.items-center.border-blue-400.dark\:border-blue-700.bg-blue-100.dark\:bg-blue-900.text-blue-900.dark\:text-blue-300.mx-1.md\:mx-0,
@@ -96,7 +88,6 @@
         border-color: var(--purple) !important;
     }
 
-    /* Applies the main background color to various page elements */
     body,
     :is(.dark .dark\:bg-gray-800),
     :is(.dark .dark\:bg-gray-800\/95),
@@ -109,13 +100,11 @@
         background-color: var(--main-bg) !important;
     }
 
-    /* Styles the overlay for detached elements (like search) with a blur effect */
     .aa-DetachedOverlay {
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(5px);
     }
     
-    /* Applies the secondary background color to specific container and card elements */
     .aa-DetachedContainer .aa-Panel,
     .aa-DetachedFormContainer,
     section#features,
@@ -126,7 +115,6 @@
         background-color: var(--second-bg) !important;
     }
 
-    /* Applies the tertiary background color to a wide range of elements, including inputs, buttons on hover, and scrollbar thumbs */
     :is(.dark .dark\:bg-gray-700),
     :is(.dark .dark\:hover\:bg-gray-700:hover),
     :is(.dark .dark\:bg-gray-750),
@@ -150,44 +138,37 @@
         background-color: var(--third-bg) !important;
     }
 
-    /* Defines a smooth transition for image opacity changes */
     img.select-none.rounded.object-cover.object-top.w-24.h-32.md\:w-28.md\:h-36.lg\:w-36.lg\:h-48.xl\:w-44.xl\:h-56.active\:brightness-75,
     img.select-none.object-cover.object-top.w-full.active\:brightness-75,
     img.select-none.rounded.w-full.mb-2.md\:mb-3.lg\:mb-4.active\:brightness-75.object-top {
         transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Reduces image opacity on hover for a subtle visual feedback */
     img.select-none.rounded.object-cover.object-top.w-24.h-32.md\:w-28.md\:h-36.lg\:w-36.lg\:h-48.xl\:w-44.xl\:h-56.active\:brightness-75:hover,
     img.select-none.object-cover.object-top.w-full.active\:brightness-75:hover,
     img.select-none.rounded.w-full.mb-2.md\:mb-3.lg\:mb-4.active\:brightness-75.object-top:hover {
         opacity: .7;
     }
 
-    /* Sets initial opacity and transition for reader settings and sticky elements */
     div#bottom-reader-settings,
     .w-12.overflow-y-hidden.flex.flex-col.items-center.hover\:bg-gray-100.dark\:hover\:bg-gray-600.cursor-pointer.sticky.top-0 {
         opacity: 0.7;
         transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* Increases opacity on hover for reader settings and sticky elements */
     div#bottom-reader-settings:hover,
     .w-12.overflow-y-hidden.flex.flex-col.items-center.hover\:bg-gray-100.dark\:hover\:bg-gray-600.cursor-pointer.sticky.top-0:hover {
         opacity: 1;
     }
 
-    /* Styles shadows for various elements */
     .shadow-sm, .shadow-xl, .ring-1, .ring-2 {
-        box-shadow: 0 0 25px rgba(28, 28, 28, 0.5); /* Soft shadow effect */
+        box-shadow: 0 0 25px rgba(28, 28, 28, 0.5);
     }
 
-    /* Removes the default gradient from the bottom of Algolia Autocomplete dropdown */
     .aa-GradientBottom {
         background-image: none;
     }
 
-    /* Hides specific sections of the page for a cleaner interface */
     #comic-info-bottom,
     div.text-center:nth-of-type(4),
     .overflow-hidden.space-y-5.xl\:w-3\/12.w-4\/12.float-right.pr-0.lg\:pb-3.lg\:pl-4.pb-1.pl-3,
@@ -196,21 +177,18 @@
         display: none;
     }
 
-    /* Makes the main content area take up full width when a sidebar is hidden */
     .xl\:w-9\/12 {
         width: 100%;
     }
 
-    /* Styles various heading and text elements with theme colors */
     h1, h2, h3, h4, h5, h6 {
         color: var(--white);
     }
 
     p, span, div, li, td {
-        color: var(--gray); /* Default text color for common elements */
+        color: var(--gray);
     }
     
-    /* Sets specific text elements to the theme's gray color */
     .text-gray-500, .dark\:text-gray-400, .dark\:text-gray-500, .dark\:text-gray-600, ._5sut1r0._5sut1r2._5sut1r8._1nljf825._1nljf82m._1nljf829._8awkg06,
     .text-gray-400, .dark\:text-slate-500, .comic-desc.xl\:h-auto.max-h-96.overflow-y-auto.scrollbox.dark\:scrollbox-dark.scrollbar-thin.scrollbar-thumb-gray-300.scrollbar-track-gray-100.dark\:scrollbar-thumb-gray-600.dark\:scrollbar-track-gray-700.scrollbar-thumb-rounded.my-3.md\:my-5.prose.prose-hr\:my-3.dark\:prose-invert.max-w-none.prose-table\:w-auto,
     .flex.items-center.my-1.space-x-2.text-gray-400.dark\:text-gray-500.font-semibold.text-xs.cursor-pointer.pl-11,
@@ -231,7 +209,6 @@
         color: var(--gray);
     }
     
-    /* Sets specific text elements to the theme's white color */
     .text-white, .dark\:text-gray-300, ._1kxba130, h2._1nljf825._1nljf82m._1nljf828, .text-gray-400, .prose :where(a):not(:where([class~=not-prose] *)),
     h2.text-left.md\:font-bold.md\:text-base.lg\:text-lg.cursor-pointer, .aa-Input, ::-webkit-input-placeholder, :-ms-input-placeholder, ::placeholder,
     input::-moz-placeholder,textarea::-moz-placeholder, .autocomplete-search .aa-DetachedSearchButtonPlaceholder, .placeholder-gray-400::-moz-placeholder,
@@ -241,4 +218,50 @@
     {
         color: var(--white) !important;
     }
+
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a {
+        color: unset !important;
+        background-color: unset !important;
+    }
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a svg {
+        color: var(--gray) !important;
+    }
+     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover,
+     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover svg {
+        color: var(--purple) !important;
+        background-color: var(--third-bg) !important;
+    }
+
+    #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a > div.btn.p-2 {
+        color: var(--gray) !important;
+        background-color: var(--second-bg) !important;
+        border: 1px solid var(--third-bg) !important;
+    }
+    #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a > div.btn.p-2:hover {
+        color: var(--white) !important;
+        background-color: var(--purple) !important;
+    }
+
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div:nth-of-type(6) {
+        color: unset !important;
+        background-color: unset !important;
+    }
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div:nth-of-type(6) * {
+        color: var(--gray) !important;
+    }
+     #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2):hover > div:nth-of-type(6) * {
+        color: var(--purple) !important;
+    }
+
+    #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg {
+        color: var(--gray) !important;
+    }
+    #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg:hover {
+        color: var(--white) !important;
+    }
+    #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg > path {
+       /* fill: var(--gray) !important; */
+       /* stroke: var(--gray) !important; */
+    }
 }
+
