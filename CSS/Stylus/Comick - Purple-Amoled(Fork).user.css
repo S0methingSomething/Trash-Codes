@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Comick - Purple-Amoled(Fork)
 @namespace      github.com/openstyles/stylus
-@version        1.0.3
+@version        1.0.4
 @description    A purple amoled theme with smoother, natural animations and a vibrant purple.
 @author         S0methingSomething & Gemini
 ==/UserStyle== */
@@ -277,5 +277,34 @@
        stroke: var(--gray) !important;
     }
     */
-}
 
+    /* --- Styling for buttons within horizontal scroll containers (e.g., "Continue Chapter") --- */
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > div > a,
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > a, /* For slightly less nested buttons */
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[class*="btn"], /* If they have a common btn class */
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[role="button"] /* If they have a role attribute */
+    {
+        color: var(--gray) !important;
+        background-color: var(--second-bg) !important;
+        border: 1px solid var(--third-bg) !important;
+        padding: 0.5rem 0.75rem !important;
+        border-radius: 5px !important;
+        text-align: center !important;
+        display: block !important; /* Changed to block for better layout control */
+        margin-top: 0.5rem !important; /* Add some margin if needed */
+        line-height: 1.2 !important;
+        font-size: 0.875rem !important;
+        width: auto !important; /* Allow width to be determined by content or parent */
+        min-width: 80px !important; /* Ensure a minimum tap target size */
+    }
+
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > div > a:hover,
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > a:hover,
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[class*="btn"]:hover,
+    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[role="button"]:hover
+    {
+        color: var(--white) !important;
+        background-color: var(--purple) !important;
+        border-color: var(--purple) !important;
+    }
+}
