@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ComicK - Amoled(Fork)
 @namespace      github.com/openstyles/stylus
-@version        1.0.2
+@version        1.0.3
 @description    A purple amoled theme with smoother, natural animations and a vibrant purple.
 @author         S0methingSomething & Gemini
 ==/UserStyle== */
@@ -219,49 +219,69 @@
         color: var(--white) !important;
     }
 
-    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a {
-        color: unset !important;
-        background-color: unset !important;
+    /* --- Specific Element Overrides --- */
+
+    /* Target the container for the first element and its children */
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 {
+        background-color: transparent !important; /* Or var(--main-bg) if needed */
     }
-    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a svg {
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a,
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a > * { /* Target all children of the link */
         color: var(--gray) !important;
+        background-color: transparent !important;
     }
-     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover,
-     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover svg {
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover,
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a:hover > * {
         color: var(--purple) !important;
         background-color: var(--third-bg) !important;
     }
 
+    /* Target the container for the second element (button) */
+    #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a {
+        /* No specific background needed for the link itself if the inner div is styled */
+    }
     #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a > div.btn.p-2 {
         color: var(--gray) !important;
         background-color: var(--second-bg) !important;
         border: 1px solid var(--third-bg) !important;
     }
-    #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a > div.btn.p-2:hover {
+    #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a:hover > div.btn.p-2 {
         color: var(--white) !important;
         background-color: var(--purple) !important;
+        border-color: var(--purple) !important;
     }
 
-    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div:nth-of-type(6) {
-        color: unset !important;
-        background-color: unset !important;
+    /* Target the container for the third element (updates section) */
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) {
+        background-color: transparent !important;
     }
-    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div:nth-of-type(6) * {
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div { /* Target inner divs */
+        color: var(--gray) !important;
+        background-color: transparent !important;
+    }
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div * { /* Target all descendants like text spans */
         color: var(--gray) !important;
     }
-     #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2):hover > div:nth-of-type(6) * {
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2):hover > div *,
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2):hover > div {
         color: var(--purple) !important;
+        background-color: var(--third-bg) !important;
     }
 
+
+    /* Lighten the "x" icon */
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg {
         color: var(--gray) !important;
     }
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg:hover {
         color: var(--white) !important;
     }
+    /* Path styling is often inherited from the SVG color property, so direct path styling might not be needed if the SVG rule works */
+    /*
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg > path {
-       /* fill: var(--gray) !important; */
-       /* stroke: var(--gray) !important; */
+       fill: var(--gray) !important;
+       stroke: var(--gray) !important;
     }
+    */
 }
 
