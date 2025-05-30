@@ -1,5 +1,5 @@
 /* ==UserStyle==
-@name           ComicK - Amoled(Fork)
+@name           Comick - Purple-Amoled(Fork)
 @namespace      github.com/openstyles/stylus
 @version        1.0.3
 @description    A purple amoled theme with smoother, natural animations and a vibrant purple.
@@ -221,12 +221,11 @@
 
     /* --- Specific Element Overrides --- */
 
-    /* Target the container for the first element and its children */
     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 {
-        background-color: transparent !important; /* Or var(--main-bg) if needed */
+        background-color: transparent !important;
     }
     #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a,
-    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a > * { /* Target all children of the link */
+    #main > div:nth-of-type(1) > div:nth-of-type(2) > div > div.mt-3 > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.mt-3.pr-2 > div.flex.items-center.h-8 > a > * {
         color: var(--gray) !important;
         background-color: transparent !important;
     }
@@ -236,7 +235,6 @@
         background-color: var(--third-bg) !important;
     }
 
-    /* Target the container for the second element (button) */
     #main > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > div.flex.items-center > a {
         /* No specific background needed for the link itself if the inner div is styled */
     }
@@ -251,15 +249,14 @@
         border-color: var(--purple) !important;
     }
 
-    /* Target the container for the third element (updates section) */
     #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) {
         background-color: transparent !important;
     }
-    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div { /* Target inner divs */
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div {
         color: var(--gray) !important;
         background-color: transparent !important;
     }
-    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div * { /* Target all descendants like text spans */
+    #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2) > div * {
         color: var(--gray) !important;
     }
     #updates-container > div.w-full.h-full.relative > div:nth-of-type(4) > div:nth-of-type(2) > div > a:nth-of-type(2):hover > div *,
@@ -268,15 +265,12 @@
         background-color: var(--third-bg) !important;
     }
 
-
-    /* Lighten the "x" icon */
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg {
         color: var(--gray) !important;
     }
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg:hover {
         color: var(--white) !important;
     }
-    /* Path styling is often inherited from the SVG color property, so direct path styling might not be needed if the SVG rule works */
     /*
     #main > div:nth-of-type(2) > div.navigation-wrapper > div:nth-of-type(1) > div > div:nth-of-type(1) > div.relative.group > div:nth-of-type(2) > svg > path {
        fill: var(--gray) !important;
