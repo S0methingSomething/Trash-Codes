@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Comick - Purple-Amoled(Fork)
 @namespace      github.com/openstyles/stylus
-@version        1.0.4
+@version        1.0.5
 @description    A purple amoled theme with smoother, natural animations and a vibrant purple.
 @author         S0methingSomething & Gemini
 ==/UserStyle== */
@@ -279,30 +279,28 @@
     */
 
     /* --- Styling for buttons within horizontal scroll containers (e.g., "Continue Chapter") --- */
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > div > a,
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > a, /* For slightly less nested buttons */
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[class*="btn"], /* If they have a common btn class */
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[role="button"] /* If they have a role attribute */
-    {
+    /* This targets the <a> tag that acts as a button, typically found after comic title/chapter info */
+    #main div[class*="overflow-x-scroll"] div[class*="flex-col"] > a[href*="/comic/"] {
         color: var(--gray) !important;
         background-color: var(--second-bg) !important;
         border: 1px solid var(--third-bg) !important;
-        padding: 0.5rem 0.75rem !important;
+        padding: 0.3rem 0.75rem !important; /* Adjusted padding */
         border-radius: 5px !important;
         text-align: center !important;
-        display: block !important; /* Changed to block for better layout control */
-        margin-top: 0.5rem !important; /* Add some margin if needed */
-        line-height: 1.2 !important;
-        font-size: 0.875rem !important;
-        width: auto !important; /* Allow width to be determined by content or parent */
-        min-width: 80px !important; /* Ensure a minimum tap target size */
+        display: block !important;
+        margin-top: 0.5rem !important;
+        line-height: 1.3 !important; /* Adjusted line height */
+        font-size: 0.8rem !important; /* Adjusted font size */
+        width: calc(100% - 1rem) !important; /* Make it slightly less than full width of its parent column */
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > div > a:hover,
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div > div > div > a:hover,
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[class*="btn"]:hover,
-    #main div.flex.overflow-x-scroll.hide-scroll-bar.h-\\[17rem\\].md\\:h-\\[18rem\\].lg\\:h-\\[23rem\\] > div a[role="button"]:hover
-    {
+    #main div[class*="overflow-x-scroll"] div[class*="flex-col"] > a[href*="/comic/"]:hover {
         color: var(--white) !important;
         background-color: var(--purple) !important;
         border-color: var(--purple) !important;
