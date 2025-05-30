@@ -1,0 +1,246 @@
+/* ==UserStyle==
+@name           ComicK - Purple-Amoled(Fork)
+@namespace      github.com/openstyles/stylus
+@version        1.0.1
+@description    A purple amoled theme with smoother, natural animations.
+@author         S0methingSomething & Gemini
+==/UserStyle== */
+@-moz-document domain("comick.io") {
+    :root {
+        /** Backgrounds **/
+        --main-bg: rgb(0, 0, 0); /* Deep black for the main background */
+        --second-bg: rgb(18, 18, 18); /* Slightly lighter black for secondary background elements */
+        --second-bg-opacity: rgba(18, 18, 18, .5); /* Semi-transparent secondary background */
+        --third-bg: rgb(28, 28, 28); /* Even lighter black for tertiary background elements */
+        --third-bg-hover: rgba(43, 43, 43, .8); /* Tertiary background color on hover, with more opacity */
+
+        /** Colors **/
+        --white: #fff; /* Standard white text color */
+        --gray: #ccc; /* Light gray for secondary text or less important elements */
+        --purple: #9D84B7; /* Primary accent color - a pleasant purple */
+        --light-purple: #B0A8B9; /* Lighter shade of purple for highlights or accents */
+    }
+
+    /* General transition for smoother animations across various properties */
+    * {
+        transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+        background-color: var(--main-bg); /* Sets the main background color for the entire page */
+    }
+
+    /* Defines transition effects for interactive elements like links, buttons, and clickable items */
+    a, button, .cursor-pointer {
+        transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Adds a subtle lift and shadow effect on hover for interactive elements */
+    a:hover, button:hover, .cursor-pointer:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Sets the primary accent color (purple) for various text elements */
+    :is(.dark .dark\:text-blue-300),
+    .text-blue-500,
+    .hm2git0,
+    :is(.dark .dark\:hover\:text-gray-200:hover),
+    .flex.items-center.rounded.absolute.top-3.right-0,
+    :is(.dark .dark\:text-gray-500),
+    .prose :where(a):not(:where([class~=not-prose] *)):hover,
+    a.relative.grow-0.w-8\/12.flex.justify-center.h-28.md\:h-32.xl\:h-40.px-4.border-r.leading-5.border-gray-600.select-none.text-xl.bg-gray-100.hover\:bg-gray-200.dark\:bg-gray-700.dark\:hover\:bg-gray-600:hover,
+    a.relative.grow-0.w-4\/12.flex.justify-center.h-28.md\:h-32.xl\:h-40.px-4.leading-5.bg-gray-100.hover\:bg-gray-200.dark\:bg-gray-700.dark\:hover\:bg-gray-600.border-gray-600.border-r.select-none.text-lg:hover,
+    button.aa-DetachedCancelButton,
+    .aa-ItemActionButton svg,
+    .top-1\/2.-translate-y-1\/2.absolute.right-1.dark\:bg-gray-600.bg-white.dark\:hover\:bg-gray-500.hover\:bg-gray-100.rounded-full.flex.items-center.opacity-80.p-2.md\:p-3:hover,
+    .top-1\/2.-translate-y-1\/2.absolute.left-1.dark\:bg-gray-600.bg-white.dark\:hover\:bg-gray-500.hover\:bg-gray-100.rounded-full.p-2.md\:p-3.flex.items-center.opacity-80:hover,
+    [type=checkbox]:checked:focus, [type=checkbox]:checked:hover, [type=radio]:checked:focus, [type=radio]:checked:hover,
+    [type=checkbox]:checked,
+    :is(.dark .dark\:bg-gray-600),
+    :is(.dark .group:hover .dark\:group-hover\:text-gray-400),
+    .rounded-full.h-8.w-8.flex-none.flex.items-center.justify-center.bg-gray-100.dark\:bg-gray-700.cursor-pointer.dark\:hover\:bg-gray-600:hover,
+    .aa-Form:focus-within,
+    mark,
+    .aa-ClearButton,
+    ._1kxba130:hover,
+    ._1kxba130:active,
+    .db4loq0,
+    ._1kxba130:focus,
+    .db4loq1:focus,
+    button.dark\:\!bg-red-700.\!text-2xl.inline-flex.items-center.rounded.font-medium.shadow-sm.focus\:outline-none.focus\:ring-2.rounded-md.px-6.py-3.text-base.border-transparent.bg-blue-600.dark\:bg-blue-600.text-white.hover\:bg-blue-700.dark\:hover\:bg-blue-600.focus\:ring-blue-500:hover,
+    a.flex.items-center.text-2xl.gap-2.link,
+    a.relative.grow-0.w-full.flex.justify-center.h-28.md\:h-32.xl\:h-40.px-4.border-r.leading-5.border-gray-600.select-none.text-xl.bg-gray-100.hover\:bg-gray-200.dark\:bg-gray-700.dark\:hover\:bg-gray-600:hover,
+    a.relative.grow-0.w-9\/12.flex.justify-center.h-28.md\:h-32.xl\:h-40.px-4.border-r.leading-5.bg-gray-100.hover\:bg-gray-200\/40.dark\:bg-gray-700\/40.dark\:hover\:bg-gray-600.border-gray-600.select-none.text-xl:hover,
+    label.ml-3.text-xs.md\:text-base.cursor-pointer:hover,
+    svg.w-12.h-12.cursor-pointer.hover\:text-blue-500.hover\:brightness-200.active\:brightness-200.active\:animate-ping.text-blue-600,
+    svg.h-6.w-6.my-3.mx-auto.text-gray-500:hover,
+    svg.h-6.w-6.mt-3.mx-auto.text-gray-500:hover,
+    svg.w-8.h-8.stroke-2.stroke-current:hover,
+    svg.w-12.h-12.cursor-pointer.hover\:text-blue-500.hover\:brightness-200.active\:brightness-200.active\:animate-ping:hover,
+    svg.h-6.w-6.mx-auto.dark\:text-gray-400.text-gray-500:hover,
+    .ory_elements__button_social__i8n2ik0:focus, .ory_elements__button_social__i8n2ik0:hover,
+    .md\:space-x-16>:not([hidden])~:not([hidden]):hover,
+    .dark\:hover\:border-blue-500:hover:is(.dark *),
+    .fill-blue-500
+     {
+        color: var(--purple) !important;
+    }
+
+    /* Sets the primary accent color (purple) for border elements */
+    :is(.dark .dark\:border-blue-200),
+    .border-blue-700,
+    .rounded.p-2.flex.border-l-8.shadow.items-center.border-blue-400.dark\:border-blue-700.bg-blue-100.dark\:bg-blue-900.text-blue-900.dark\:text-blue-300.mx-1.md\:mx-0,
+    ._15i54991,
+    :is(.dark .dark\:hover\:border-gray-500:hover) {
+        border-color: var(--purple) !important;
+    }
+
+    /* Applies the main background color to various page elements */
+    body,
+    :is(.dark .dark\:bg-gray-800),
+    :is(.dark .dark\:bg-gray-800\/95),
+    html.dark::-webkit-scrollbar-track,
+    :is(.dark .dark\:scrollbar-track-gray-700),
+    .bg-white,
+    .p-1.md\:p-3.w-full.\!bg-opacity-80.right-0.bg-gray-200.dark\:bg-gray-700.text-sm.md\:text-base.padding-safe-top,
+    .bg-white\/95, :is(.dark .dark\:bg-gray-800), .flex.items-center.justify-between.space-x-2.px-3.sm\:px-6.lg\:px-8.py-2.lg\:border-b.border-gray-100.dark\:border-gray-700.bg-white\/95.dark\:bg-gray-800\/95, .padding-safe-top.w-full.top-0.z-10.bg-white.dark\:bg-gray-800.sticky, header,
+    :is(.dark .max-lg\:dark\:bg-gray-800) {
+        background-color: var(--main-bg) !important;
+    }
+
+    /* Styles the overlay for detached elements (like search) with a blur effect */
+    .aa-DetachedOverlay {
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+    }
+    
+    /* Applies the secondary background color to specific container and card elements */
+    .aa-DetachedContainer .aa-Panel,
+    .aa-DetachedFormContainer,
+    section#features,
+    .ory_elements__card__1xqjo9i3.ory_elements__card__1xqjo9i0.ory_elements__card_size_default__1xqjo9i4.ory_elements__typography__1nljf825.ory_elements__typography_type_regular__1nljf82m.ory_elements__typography_size_small__1nljf828.md\:\!max-w-\[32rem\],
+    .bg-gray-100\/60,
+    .rounded-md.bg-blue-50.dark\:bg-blue-900.p-4.max-w-md.md\:mx-auto.mx-3,
+    .rounded.text-lg.w-screen.md\:w-72.mt-2.right-0.absolute.bg-white.dark\:bg-gray-800.border.dark\:border-gray-700.z-10.visible {
+        background-color: var(--second-bg) !important;
+    }
+
+    /* Applies the tertiary background color to a wide range of elements, including inputs, buttons on hover, and scrollbar thumbs */
+    :is(.dark .dark\:bg-gray-700),
+    :is(.dark .dark\:hover\:bg-gray-700:hover),
+    :is(.dark .dark\:bg-gray-750),
+    :is(.dark .dark\:hover\:bg-gray-600:hover),
+    [type=checkbox], [type=radio],
+    .hm2git0,
+    :is(.dark input[type=email]), :is(.dark input[type=number]), :is(.dark input[type=password]), :is(.dark input[type=text]), :is(.dark select), :is(.dark textarea),
+    :is(.dark .autocomplete-search .aa-DetachedSearchButton),
+    .aa-Item[aria-selected=true],
+    html.dark::-webkit-scrollbar-thumb,
+    :is(.dark .dark\:scrollbar-thumb-gray-600),
+    .dark .btn:hover,
+    li.text-sm.md\:text-base.ml-1.mt-1.px-2.py-1.rounded.bg-gray-100.dark\:bg-gray-750.cursor-pointer.active\:bg-blue-500.hover\:bg-gray-200.dark\:hover\:bg-gray-700.md\:text-lg:hover,
+    .bg-gray-500\/90,
+    :is(.dark .dark\:\!bg-gray-800),
+    .aa-Form,
+    .shadow-sm, .shadow-xl,
+    .group.relative.rounded-full.px-4.py-1.lg\:rounded-l-xl.lg\:rounded-r-none.lg\:p-6.bg-white.lg\:bg-white\/10.lg\:ring-1.lg\:ring-inset.lg\:ring-white\/10,
+    button.md\:col-span-2.inline-flex.items-center.rounded.font-medium.shadow-sm.focus\:outline-none.focus\:ring-2.rounded-md.px-3.py-2.text-sm.leading-4.border.border-gray-300.dark\:border-gray-600.bg-white.dark\:bg-gray-700.text-gray-700.dark\:text-gray-200.hover\:bg-gray-50.dark\:hover\:bg-gray-600.focus\:ring-blue-500:hover,
+    .h-14.text-center.flex.items-center.justify-center.cursor-pointer:hover {
+        background-color: var(--third-bg) !important;
+    }
+
+    /* Defines a smooth transition for image opacity changes */
+    img.select-none.rounded.object-cover.object-top.w-24.h-32.md\:w-28.md\:h-36.lg\:w-36.lg\:h-48.xl\:w-44.xl\:h-56.active\:brightness-75,
+    img.select-none.object-cover.object-top.w-full.active\:brightness-75,
+    img.select-none.rounded.w-full.mb-2.md\:mb-3.lg\:mb-4.active\:brightness-75.object-top {
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Reduces image opacity on hover for a subtle visual feedback */
+    img.select-none.rounded.object-cover.object-top.w-24.h-32.md\:w-28.md\:h-36.lg\:w-36.lg\:h-48.xl\:w-44.xl\:h-56.active\:brightness-75:hover,
+    img.select-none.object-cover.object-top.w-full.active\:brightness-75:hover,
+    img.select-none.rounded.w-full.mb-2.md\:mb-3.lg\:mb-4.active\:brightness-75.object-top:hover {
+        opacity: .7;
+    }
+
+    /* Sets initial opacity and transition for reader settings and sticky elements */
+    div#bottom-reader-settings,
+    .w-12.overflow-y-hidden.flex.flex-col.items-center.hover\:bg-gray-100.dark\:hover\:bg-gray-600.cursor-pointer.sticky.top-0 {
+        opacity: 0.7;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Increases opacity on hover for reader settings and sticky elements */
+    div#bottom-reader-settings:hover,
+    .w-12.overflow-y-hidden.flex.flex-col.items-center.hover\:bg-gray-100.dark\:hover\:bg-gray-600.cursor-pointer.sticky.top-0:hover {
+        opacity: 1;
+    }
+
+    /* Styles shadows for various elements */
+    .shadow-sm, .shadow-xl, .ring-1, .ring-2 {
+        box-shadow: 0 0 25px rgba(28, 28, 28, 0.5); /* Soft shadow effect */
+    }
+
+    /* Removes the default gradient from the bottom of Algolia Autocomplete dropdown */
+    .aa-GradientBottom {
+        background-image: none;
+    }
+
+    /* Hides specific sections of the page for a cleaner interface */
+    #comic-info-bottom,
+    div.text-center:nth-of-type(4),
+    .overflow-hidden.space-y-5.xl\:w-3\/12.w-4\/12.float-right.pr-0.lg\:pb-3.lg\:pl-4.pb-1.pl-3,
+    div#comment-section,
+    .pt-2.pb-10, .py-16 {
+        display: none;
+    }
+
+    /* Makes the main content area take up full width when a sidebar is hidden */
+    .xl\:w-9\/12 {
+        width: 100%;
+    }
+
+    /* Styles various heading and text elements with theme colors */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--white);
+    }
+
+    p, span, div, li, td {
+        color: var(--gray); /* Default text color for common elements */
+    }
+    
+    /* Sets specific text elements to the theme's gray color */
+    .text-gray-500, .dark\:text-gray-400, .dark\:text-gray-500, .dark\:text-gray-600, ._5sut1r0._5sut1r2._5sut1r8._1nljf825._1nljf82m._1nljf829._8awkg06,
+    .text-gray-400, .dark\:text-slate-500, .comic-desc.xl\:h-auto.max-h-96.overflow-y-auto.scrollbox.dark\:scrollbox-dark.scrollbar-thin.scrollbar-thumb-gray-300.scrollbar-track-gray-100.dark\:scrollbar-thumb-gray-600.dark\:scrollbar-track-gray-700.scrollbar-thumb-rounded.my-3.md\:my-5.prose.prose-hr\:my-3.dark\:prose-invert.max-w-none.prose-table\:w-auto,
+    .flex.items-center.my-1.space-x-2.text-gray-400.dark\:text-gray-500.font-semibold.text-xs.cursor-pointer.pl-11,
+    .flex.items-center.my-1.space-x-2.text-gray-400.dark\:text-gray-500.font-semibold.text-xs.cursor-pointer.pl-20,
+    .text-gray-500.dark\:text-gray-400.overflow-auto.mt-3,
+    .rounded.dark\:border-gray-700.text-xs, span.hover\:bg-gray-50.dark\:hover\:bg-gray-700.block.p-1,
+    p.text-gray-700.dark\:text-gray-400,
+    li.hover\:bg-gray-50.dark\:hover\:bg-gray-700.cursor-pointer.flex.items-center, li.hover\:bg-gray-50.dark\:hover\:bg-gray-700.cursor-pointer, li.py-2.px-5.items-center.cursor-pointer,
+    .comic-desc a,
+    label.ory_elements__typography__1nljf825.ory_elements__typography_type_regular__1nljf82m.ory_elements__typography_size_small__1nljf828,
+    .ory_elements__input_field__db4loq2,
+    .w-3.mx-2,
+    .md\:space-x-16>:not([hidden])~:not([hidden]),
+    .dark\:text-blue-200:is(.dark *),
+    .ml-3.mt-2.px-4.py-2.flex.items-center.justify-center.text-gray-400, .text-center.my-3,
+    .dark\:text-gray-450:is(.dark *)
+    {
+        color: var(--gray);
+    }
+    
+    /* Sets specific text elements to the theme's white color */
+    .text-white, .dark\:text-gray-300, ._1kxba130, h2._1nljf825._1nljf82m._1nljf828, .text-gray-400, .prose :where(a):not(:where([class~=not-prose] *)),
+    h2.text-left.md\:font-bold.md\:text-base.lg\:text-lg.cursor-pointer, .aa-Input, ::-webkit-input-placeholder, :-ms-input-placeholder, ::placeholder,
+    input::-moz-placeholder,textarea::-moz-placeholder, .autocomplete-search .aa-DetachedSearchButtonPlaceholder, .placeholder-gray-400::-moz-placeholder,
+    .placeholder-gray-400::placeholder, .placeholder\:text-slate-400::-moz-placeholder, .placeholder\:text-slate-400::placeholder, .aa-Input::-moz-placeholder,
+    span.text-sm.font-medium.text-gray-400.dark\:text-gray-600.ml-2.md\:inline-block, h1, .text-gray-500.dark\:text-gray-400.overflow-auto.mt-3, p.break-words.text-gray-400.dark\:text-gray-500,
+    button#headlessui-menu-button-\:r16\:
+    {
+        color: var(--white) !important;
+    }
+}
+
+I've gone through and updated the comments to be more descriptive of what the CSS rules are doing. Let me know if you'd like any other adjustments!
