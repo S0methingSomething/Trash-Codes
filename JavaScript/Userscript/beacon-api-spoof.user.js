@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name        Beacon API Spoof
-// @version     2.1.0
-// @description Intercepts and disables navigator.sendBeacon() by mimicking successful queuing with improved accuracy and stealth.
+// @name        Stealth Beacon API Spoof
+// @version     3.1.0
+// @description Intercepts navigator.sendBeacon() with advanced stealth and reliability to block tracking by mimicking native behavior and edge cases.
 // @author      
 // @match       *://*/*
 // @run-at      document-start
 // @grant       none
-// @namespace   https://github.comS0methingSomething/
+// @namespace   https://github.com/S0methingSomething/
 // @homepageURL https://github.com/S0methingSomething/
 // @license     MIT
 // ==/UserScript==
@@ -14,236 +14,147 @@
 (function() {
     'use strict';
 
-    const SCRIPT_PREFIX = '[Beacon API Spoof]';
-    const SIMULATED_QUOTA = 65536; // 64 KiB - Standard Beacon Quota per transmission, but we'll simulate accumulation
-    const ENABLE_LOGGING = false; // Toggle this to true for logging intercepted calls and debug info
+    // --- Configuration ---
+    const SCRIPT_PREFIX = '[Stealthy Beacon Spoof]';
+    const SIMULATED_QUOTA = 65536; // 64 KiB - The minimum quota guaranteed by the Beacon API specification.
+    const ENABLE_LOGGING = false; // Set to true for debugging. WARNING: Console logs can be detected by other scripts.
 
-    // Simulated per-origin quota tracker (resets on page load/unload simulation)
-    // In reality, beacons are queued until transmission, but we simulate accumulation for better mimicry.
-    const quotaTracker = new Map(); // Key: origin, Value: used quota
+    // --- State ---
+    const quotaTracker = new Map();
+    const originalToString = Function.prototype.toString;
 
-    /**
-     * Logs messages if logging is enabled.
-     * @param {...any} args - Arguments to log.
-     */
-    function log(...args) {
-        if (ENABLE_LOGGING) {
-            console.log(SCRIPT_PREFIX, ...args);
-        }
-    }
+    // --- Utility Functions ---
+    const log = (...args) => ENABLE_LOGGING && console.log(SCRIPT_PREFIX, ...args);
+    const warn = (...args) => ENABLE_LOGGING && console.warn(SCRIPT_PREFIX, ...args);
 
-    /**
-     * Logs warnings if logging is enabled.
-     * @param {...any} args - Arguments to warn.
-     */
-    function warn(...args) {
-        if (ENABLE_LOGGING) {
-            console.warn(SCRIPT_PREFIX, ...args);
-        }
-    }
-
-    /**
-     * Gets the origin from a URL, falling back to current page origin.
-     * @param {string} url - The URL to parse.
-     * @returns {string} The origin.
-     */
-    function getOrigin(url) {
-        try {
-            return new URL(url, window.location.origin).origin;
-        } catch (e) {
-            return window.location.origin;
-        }
-    }
-
-    /**
-     * Estimates the size of FormData as multipart/form-data more accurately.
-     * Simulates boundary, headers, and content without full encoding.
-     * @param {FormData} formData - The FormData object.
-     * @returns {number} Estimated byte size.
-     */
-    function estimateFormDataSize(formData) {
+    function getEstimatedFormDataSize(formData) {
+        // Implementation remains the same...
         let size = 0;
-        const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2); // Simulate a boundary
-        const boundaryLength = boundary.length + 2; // --boundary\r\n
+        const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+        const boundaryLength = boundary.length + 4; // --boundary\r\n
         const crlf = 2; // \r\n bytes
 
         try {
             for (const [key, value] of formData.entries()) {
-                // Header: --boundary\r\nContent-Disposition: form-data; name="key"\r\n\r\n
                 let header = `--${boundary}\r\nContent-Disposition: form-data; name="${key}"`;
                 if (value instanceof File || value instanceof Blob) {
                     header += `; filename="${value.name || 'blob'}"\r\nContent-Type: ${value.type || 'application/octet-stream'}`;
                 }
                 header += '\r\n\r\n';
                 size += new Blob([header]).size;
-
-                // Value size
-                if (value instanceof Blob) {
-                    size += value.size;
-                } else if (typeof value === 'string') {
-                    size += new Blob([value]).size;
-                } else {
-                    size += 0; // Unsupported, but skip for estimation
-                }
-
-                size += crlf; // \r\n after value
+                size += (value instanceof Blob) ? value.size : new Blob([String(value)]).size;
+                size += crlf;
             }
-            // Final boundary: --boundary--
-            size += boundaryLength + 2; // --boundary--
+            size += boundary.length + 4; // --boundary--
         } catch (e) {
             warn('Error estimating FormData size:', e);
-            return 0; // Fallback to 0 to avoid blocking valid calls
+            return 0;
         }
-
         return size;
     }
 
-    /**
-     * Creates the spoofed sendBeacon function.
-     * This function mimics the synchronous checks of the real sendBeacon
-     * but always returns true (simulating successful queuing) without sending data.
-     * @returns {function(string, BodyInit=): boolean} The spoofed sendBeacon function.
-     */
-    function createSpoofedSendBeacon() {
-        return function spoofedSendBeacon(url, data) {
-            // 1. Context Check: Ensure 'this' is the navigator object.
-            if (this !== window.navigator) {
-                warn('sendBeacon called with incorrect \'this\' context.');
-                return false;
-            }
-
-            // 2. URL Validation: Check if the URL is valid/parsable.
-            let parsedUrl;
-            try {
-                parsedUrl = new URL(url, window.location.origin);
-            } catch (e) {
-                return false;
-            }
-
-            const origin = parsedUrl.origin;
-
-            // 3. Data Type & Simulated Size Validation
-            let dataSize = 0;
-            if (data !== undefined && data !== null) {
-                if (data instanceof Blob) {
-                    dataSize = data.size;
-                } else if (typeof data === 'string') {
-                    dataSize = new Blob([data]).size;
-                } else if (data instanceof FormData) {
-                    dataSize = estimateFormDataSize(data);
-                } else if (ArrayBuffer.isView(data) || data instanceof ArrayBuffer) {
-                    dataSize = data.byteLength;
-                } else if (data instanceof URLSearchParams) {
-                    dataSize = new Blob([data.toString()]).size;
-                } else {
-                    return false;
-                }
-
-                // Simulated dynamic quota check per origin
-                const usedQuota = quotaTracker.get(origin) || 0;
-                if (usedQuota + dataSize > SIMULATED_QUOTA) {
-                    return false;
-                }
-                // "Queue" the data by accumulating simulated usage
-                quotaTracker.set(origin, usedQuota + dataSize);
-            }
-
-            // 4. Simulation Success: If all checks pass, mimic successful queuing.
-            log(`Intercepted and blocked sendBeacon call to: ${url} (size: ${dataSize} bytes, origin: ${origin})`);
-            return true;
-        };
+    function getDataSize(data) {
+        if (data === null || data === undefined) return 0;
+        if (data instanceof Blob) return data.size;
+        if (data instanceof FormData) return getEstimatedFormDataSize(data);
+        return new Blob([data]).size;
     }
 
-    /**
-     * Applies the spoofed sendBeacon function to the navigator object.
-     * Handles potential compatibility issues and attempts to make the spoofed function appear native.
-     */
+    // --- The Spoofed Function ---
+    const spoofedSendBeacon = function(url, data) {
+        if (this !== navigator) {
+            throw new TypeError("Illegal invocation: 'sendBeacon' must be called on 'navigator'");
+        }
+
+        let parsedUrl;
+        try {
+            parsedUrl = new URL(url, window.location.origin);
+        } catch (e) {
+            return false;
+        }
+
+        const origin = parsedUrl.origin;
+        const isCrossOrigin = origin !== window.location.origin;
+
+        // **IMPROVEMENT**: Mimic CORS-safelisting behavior for Blobs
+        if (isCrossOrigin && data instanceof Blob && !['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'].includes(data.type)) {
+            log(`Blocked call with non-CORS-safelisted Blob to cross-origin URL: ${url}`);
+            return false; // Mimic browser behavior of rejecting such requests pre-flight.
+        }
+
+        const dataSize = getDataSize(data);
+        const usedQuota = quotaTracker.get(origin) || 0;
+
+        if (dataSize > SIMULATED_QUOTA || (dataSize > 0 && (usedQuota + dataSize > SIMULATED_QUOTA))) {
+            log(`Blocked call to ${origin} due to simulated quota exceeded (size: ${dataSize})`);
+            return false;
+        }
+
+        if (dataSize > 0) {
+            quotaTracker.set(origin, usedQuota + dataSize);
+        }
+        log(`Intercepted and blocked sendBeacon call to: ${url} (size: ${dataSize} bytes, origin: ${origin})`);
+        return true;
+    };
+
+
+    // --- Application and Stealth Logic ---
     function applySpoof() {
         try {
-            let finalFunctionToAssign = createSpoofedSendBeacon();
-            let functionToSpoofPropertiesOn = finalFunctionToAssign;
-
-            // --- Compatibility for Sandboxed Environments (e.g., Greasemonkey) ---
-            if (typeof exportFunction === 'function') {
-                try {
-                    finalFunctionToAssign = exportFunction(finalFunctionToAssign, window, { defineAs: 'spoofedSendBeacon_exportedLogic' });
-                    functionToSpoofPropertiesOn = finalFunctionToAssign;
-                    log('Using exportFunction for compatibility.');
-                } catch (e) {
-                    warn('exportFunction failed, proceeding without it:', e);
-                }
-            } else if (typeof cloneInto === 'function') {
-                // Additional check for Firefox-specific cloning if needed
-                try {
-                    finalFunctionToAssign = cloneInto(finalFunctionToAssign, window, { cloneFunctions: true });
-                    functionToSpoofPropertiesOn = finalFunctionToAssign;
-                    log('Using cloneInto for additional compatibility.');
-                } catch (e) {
-                    warn('cloneInto failed:', e);
-                }
-            }
-
-            // --- Define the Property Robustly ---
-            Object.defineProperty(window.navigator, 'sendBeacon', {
-                value: finalFunctionToAssign,
+            const spoofedToString = () => 'function sendBeacon() { [native code] }';
+            
+            // **IMPROVEMENT**: Make the toString method itself appear native.
+            Object.defineProperty(spoofedToString, 'toString', {
+                value: () => originalToString.call(originalToString),
                 writable: false,
-                enumerable: true,
-                configurable: false
+                enumerable: false,
+                configurable: true
             });
 
-            // --- Enhanced Spoof Function Properties for Stealth ---
-            const assignedFunc = window.navigator.sendBeacon;
-            if (assignedFunc && assignedFunc === functionToSpoofPropertiesOn) {
-                try {
-                    Object.defineProperties(assignedFunc, {
-                        "length": { value: 2, writable: false, enumerable: false, configurable: true },
-                        "name": { value: "sendBeacon", writable: false, enumerable: false, configurable: true },
-                        "toString": { value: () => 'function sendBeacon() { [native code] }', writable: false, enumerable: false, configurable: true },
-                        "prototype": { value: undefined, writable: false, enumerable: false, configurable: false }, // Mimic native (often undefined)
-                        "caller": { value: null, writable: false, enumerable: false, configurable: true }, // Native functions often have null caller
-                        "arguments": { value: null, writable: false, enumerable: false, configurable: true } // Native often null
-                    });
-                    // Make the function non-extensible for extra stealth
-                    Object.preventExtensions(assignedFunc);
-                } catch (e) {
-                    warn('Failed to spoof function properties:', e);
-                }
-            } else {
-                warn('Assigned function reference mismatch. Skipping property spoofing.');
+            Object.defineProperties(spoofedSendBeacon, {
+                "length": { value: 1, writable: false, enumerable: false, configurable: true },
+                "name": { value: "sendBeacon", writable: false, enumerable: false, configurable: true },
+                "toString": { value: spoofedToString, writable: false, enumerable: false, configurable: true },
+                "prototype": { value: undefined, writable: false, enumerable: false, configurable: false }
+            });
+            Object.preventExtensions(spoofedSendBeacon);
+
+            let finalFunction = spoofedSendBeacon;
+            if (typeof exportFunction === 'function') {
+                finalFunction = exportFunction(spoofedSendBeacon, window);
+            } else if (typeof cloneInto === 'function') {
+                finalFunction = cloneInto(spoofedSendBeacon, window, { cloneFunctions: true });
             }
-            log('Spoof applied successfully.');
+
+            Object.defineProperty(Navigator.prototype, 'sendBeacon', {
+                value: finalFunction,
+                writable: true,
+                enumerable: true,
+                configurable: true
+            });
+
+            log('Spoof applied successfully to Navigator.prototype.');
 
         } catch (e) {
-            console.error(`${SCRIPT_PREFIX} Critical error during spoof application:`, e);
-            // --- Fallback: Less Robust Assignment ---
+            warn('Could not modify Navigator.prototype. Applying fallback to navigator instance.', e);
             try {
-                const fallbackFunc = createSpoofedSendBeacon();
-                window.navigator.sendBeacon = fallbackFunc;
-                warn('Used fallback assignment method.');
-                // Basic property spoofing on fallback
-                try {
-                    Object.defineProperties(fallbackFunc, {
-                        "length": { value: 2, configurable: true },
-                        "name": { value: "sendBeacon", configurable: true },
-                        "toString": { value: () => 'function sendBeacon() { [native code] }', configurable: true },
-                        "prototype": { value: undefined, configurable: true }
-                    });
-                    Object.preventExtensions(fallbackFunc);
-                } catch (e_prop) {
-                    warn('Failed to spoof properties on fallback:', e_prop);
-                }
+                Object.defineProperty(navigator, 'sendBeacon', {
+                    value: spoofedSendBeacon,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                });
+                log('Spoof applied successfully to navigator instance (fallback).');
             } catch (e2) {
-                console.error(`${SCRIPT_PREFIX} Failed to apply spoof completely:`, e2);
+                console.error(`${SCRIPT_PREFIX} Critical error: Failed to apply spoof completely.`, e2);
             }
         }
     }
 
-    // Apply the spoof
     applySpoof();
 
-    // Optional: Reset quota on page unload to simulate beacon transmission
     window.addEventListener('beforeunload', () => {
         quotaTracker.clear();
+        log('Simulated beacon quota cleared on page unload.');
     });
-
 })();
